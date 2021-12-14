@@ -71,12 +71,12 @@ ffmpeg_record () {
         echo "FFMpeg Starting. Please wait..."
         mkdir -p "$HOME/Videos/FFmpeg Record/"
         sleep 1
-        ffmpeg -framerate 60 -f x11grab -i :0.0 -c:v ${optionscodecs[$choicecodecs]} -qp 0 -preset p7 -profile:v ${optionsprofiles[$choiceprofiles]} -pixel_format ${optionspixfmt[$choicepixfmt]} "$HOME/Videos/FFmpeg Record/Record_`date +%d-%m-%Y_%T`${optionsformats[$choiceformats]}" -hide_banner
+        ffmpeg -framerate 60 -f x11grab -i :0.0 -c:v ${optionscodecs[$choicecodecs]} -qp 0 -preset p7 -profile:v ${optionsprofiles[$choiceprofiles]} -pix_fmt ${optionspixfmt[$choicepixfmt]} "$HOME/Videos/FFmpeg Record/Record_`date +%d-%m-%Y_%T`${optionsformats[$choiceformats]}" -hide_banner
     elif [[ ${optionscodecs[$choicecodecs]} == "libx265" ]] || [[ ${optionscodecs[$choicecodecs]} == "libx264" ]];then
         echo "FFMpeg Starting. Please wait..."
         mkdir -p "$HOME/Videos/FFmpeg Record/"
         sleep 1
-        ffmpeg -framerate 60 -f x11grab -i :0.0 -c:v ${optionscodecs[$choicecodecs]} -crf 0 -preset slow -profile:v ${optionsprofiles[$choiceprofiles]} -pixel_format ${optionspixfmt[$choicepixfmt]} "$HOME/Videos/FFmpeg Record/Record_`date +%d-%m-%Y_%T`${optionsformats[$choiceformats]}" -hide_banner 
+        ffmpeg -framerate 60 -f x11grab -i :0.0 -c:v ${optionscodecs[$choicecodecs]} -crf 0 -preset slow -profile:v ${optionsprofiles[$choiceprofiles]} -pix_fmt ${optionspixfmt[$choicepixfmt]} "$HOME/Videos/FFmpeg Record/Record_`date +%d-%m-%Y_%T`${optionsformats[$choiceformats]}" -hide_banner 
     fi
 }
 # Credit
