@@ -71,12 +71,12 @@ ffmpeg_record () {
         echo "FFMpeg Starting. Please wait..."
         mkdir -p "$HOME/Videos/FFmpeg Record/"
         sleep 1
-        ffmpeg -framerate 60 -f x11grab -i :0.0 -c:v ${optionscodecs[$choicecodecs]} -qp 0 -preset p7 -profile:v ${optionsprofiles[$choiceprofiles]} -pix_fmt ${optionspixfmt[$choicepixfmt]} "$HOME/Videos/FFmpeg Record/Record_`date +%d-%m-%Y_%T`${optionsformats[$choiceformats]}" -hide_banner
+        ffmpeg -framerate ${optionsfps[$choicefps]} -f x11grab -i :0.0 -c:v ${optionscodecs[$choicecodecs]} -qp 0 -preset p7 -profile:v ${optionsprofiles[$choiceprofiles]} -pix_fmt ${optionspixfmt[$choicepixfmt]} "$HOME/Videos/FFmpeg Record/Record_`date +%d-%m-%Y_%T`${optionsformats[$choiceformats]}" -hide_banner
     elif [[ ${optionscodecs[$choicecodecs]} == "libx265" ]] || [[ ${optionscodecs[$choicecodecs]} == "libx264" ]];then
         echo "FFMpeg Starting. Please wait..."
         mkdir -p "$HOME/Videos/FFmpeg Record/"
         sleep 1
-        ffmpeg -framerate 60 -f x11grab -i :0.0 -c:v ${optionscodecs[$choicecodecs]} -crf 0 -preset slow -profile:v ${optionsprofiles[$choiceprofiles]} -pix_fmt ${optionspixfmt[$choicepixfmt]} "$HOME/Videos/FFmpeg Record/Record_`date +%d-%m-%Y_%T`${optionsformats[$choiceformats]}" -hide_banner 
+        ffmpeg -framerate ${optionsfps[$choicefps]} -f x11grab -i :0.0 -c:v ${optionscodecs[$choicecodecs]} -crf 0 -preset slow -profile:v ${optionsprofiles[$choiceprofiles]} -pix_fmt ${optionspixfmt[$choicepixfmt]} "$HOME/Videos/FFmpeg Record/Record_`date +%d-%m-%Y_%T`${optionsformats[$choiceformats]}" -hide_banner 
     fi
 }
 # Credit
@@ -137,5 +137,14 @@ echo
 optionspixfmt=("yuv420p" "yuv444p" "yuv444p16le")
 select_option "${optionspixfmt[@]}"
 choicepixfmt=$?
+clear
+
+# Options Framerate
+echo "Select your framerate"
+echo "Select one option using up/down keys and enter to confirm:"
+echo
+optionsfps=("24" "30" "60")
+select_option "${optionsfps[@]}"
+choicefps=$?
 clear
 ffmpeg_record
