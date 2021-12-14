@@ -67,7 +67,7 @@ function select_option {
 }
 #FFmpeg Command to Record
 ffmpeg_record () {
-    if [[ ${optionscodecs[$choicecodecs]} == "h265_nvenc" ]] || [[ ${optionscodecs[$choicecodecs]} == "h264_nvenc" ]];then
+    if [[ ${optionscodecs[$choicecodecs]} == "hevc_nvenc" ]] || [[ ${optionscodecs[$choicecodecs]} == "h264_nvenc" ]];then
         echo "FFMpeg Starting. Please wait..."
         mkdir -p "$HOME/Videos/FFmpeg Record/"
         sleep 1
@@ -106,7 +106,7 @@ clear
 echo "Select your codec to record"
 echo "Select one option using up/down keys and enter to confirm:"
 echo
-optionscodecs=("libx264" "libx265" "h264_nvenc" "h265_nvenc")
+optionscodecs=("libx264" "libx265" "h264_nvenc" "hevc_nvenc")
 select_option "${optionscodecs[@]}"
 choicecodecs=$?
 clear
@@ -120,7 +120,7 @@ if [[ ${optionscodecs[$choicecodecs]} == "libx264" ]] || [[ ${optionscodecs[$cho
     select_option "${optionsprofiles[@]}"
     choiceprofiles=$?
     clear
-elif [[ ${optionscodecs[$choicecodecs]} == "libx265" ]] || [[ ${optionscodecs[$choicecodecs]} == "h265_nvenc" ]];then
+elif [[ ${optionscodecs[$choicecodecs]} == "libx265" ]] || [[ ${optionscodecs[$choicecodecs]} == "hevc_nvenc" ]];then
     echo "Select your codec profile"
     echo "Select one option using up/down keys and enter to confirm:"
     echo
