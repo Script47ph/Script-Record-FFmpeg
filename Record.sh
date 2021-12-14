@@ -6,7 +6,7 @@
 ffmpeg_record () {
     echo "FFMpeg Starting. Please wait..."
     sleep 1
-    ffmpeg -video_size 1366x768 -framerate 60 -f x11grab -i :0.0 -c:v h264_nvenc -qp 0 -preset p7 -profile:v high444p -pixel_format yuv444p "$directory"
+    ffmpeg -framerate 60 -f x11grab -i :0.0 -c:v h264_nvenc -qp 0 -preset p7 -profile:v high444p -pixel_format yuv444p "$directory" -hide_banner
 }
 
 # Choose Save Directory
