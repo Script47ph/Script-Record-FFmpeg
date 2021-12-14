@@ -2,15 +2,22 @@
 
 #ffmpeg -video_size 1366x768 -framerate 60 -f x11grab -i :0.0 -c:v h264_nvenc -qp 0 -preset p7 -profile:v high444p -pixel_format yuv444p
 
+#FFmpeg Command to Record
+ffmpeg_record () {
+    echo "FFMpeg Starting. Please wait..."
+    sleep 1
+    ffmpeg -video_size 1366x768 -framerate 60 -f x11grab -i :0.0 -c:v h264_nvenc -qp 0 -preset p7 -profile:v high444p -pixel_format yuv444p "$directory"
+}
+
 # Choose Save Directory
 Savepoint () {
     echo "Choose your directory to save file"
     sleep 1
-    directory=$(zenity --file-selection --title='Select a directory to save file' --directory);
+    directory=$(zenity --file-selection --title='Select a directory to save file' --save);
     sleep 1
     echo "Your directory on ($directory) has been choosed."
-    sleep 3
-    exit
+    sleep 1
+    ffmpeg_record
     #options;
 }
 # Credit
