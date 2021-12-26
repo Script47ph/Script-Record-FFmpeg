@@ -69,14 +69,16 @@ function select_option {
 ffmpeg_record () {
     if [[ ${optionscodecs[$choicecodecs]} == "hevc_nvenc" ]] || [[ ${optionscodecs[$choicecodecs]} == "h264_nvenc" ]];then
         echo "FFMpeg Starting. Please wait..."
+        echo "Press [CTRL]+[C] to stop recording."
         mkdir -p "$HOME/Videos/FFmpeg Record/"
         sleep 1
         ffmpeg -framerate ${optionsfps[$choicefps]} -f x11grab -i :0.0 -c:v ${optionscodecs[$choicecodecs]} -qp 0 -preset p7 -profile:v ${optionsprofiles[$choiceprofiles]} -pix_fmt ${optionspixfmt[$choicepixfmt]} "$HOME/Videos/FFmpeg Record/Record_`date +%d-%m-%Y_%T`${optionsformats[$choiceformats]}" -hide_banner
     elif [[ ${optionscodecs[$choicecodecs]} == "libx265" ]] || [[ ${optionscodecs[$choicecodecs]} == "libx264" ]];then
         echo "FFMpeg Starting. Please wait..."
+        echo "Press [CTRL]+[C] to stop recording."
         mkdir -p "$HOME/Videos/FFmpeg Record/"
         sleep 1
-        ffmpeg -framerate ${optionsfps[$choicefps]} -f x11grab -i :0.0 -c:v ${optionscodecs[$choicecodecs]} -crf 0 -preset slow -profile:v ${optionsprofiles[$choiceprofiles]} -pix_fmt ${optionspixfmt[$choicepixfmt]} "$HOME/Videos/FFmpeg Record/Record_`date +%d-%m-%Y_%T`${optionsformats[$choiceformats]}" -hide_banner 
+        ffmpeg -framerate ${optionsfps[$choicefps]} -f x11grab -i :0.0 -c:v ${optionscodecs[$choicecodecs]} -crf 1 -preset slow -profile:v ${optionsprofiles[$choiceprofiles]} -pix_fmt ${optionspixfmt[$choicepixfmt]} "$HOME/Videos/FFmpeg Record/Record_`date +%d-%m-%Y_%T`${optionsformats[$choiceformats]}" -hide_banner
     fi
 }
 # Credit
@@ -95,7 +97,7 @@ clear
 echo "Select your output format"
 echo "Select one option using up/down keys and enter to confirm:"
 echo
-optionsformats=(".mp4" ".mkv" ".webm")
+optionsformats=(".mp4" ".mkv")
 select_option "${optionsformats[@]}"
 choiceformats=$?
 # echo "Choosen index = $choice"
@@ -112,7 +114,15 @@ choicecodecs=$?
 clear
 
 # Options Profile
-if [[ ${optionscodecs[$choicecodecs]} == "libx264" ]] || [[ ${optionscodecs[$choicecodecs]} == "h264_nvenc" ]];then
+if [[ ${optionscodecs[$choicecodecs]} == "libx264" ]];then
+    echo "Select your codec profile"
+    echo "Select one option using up/down keys and enter to confirm:"
+    echo
+    optionsprofiles=("baseline" "main" "high" "high10" "high422" "high444")
+    select_option "${optionsprofiles[@]}"
+    choiceprofiles=$?
+    clear
+elif [[ ${optionscodecs[$choicecodecs]} == "h264_nvenc" ]];then
     echo "Select your codec profile"
     echo "Select one option using up/down keys and enter to confirm:"
     echo
@@ -134,7 +144,7 @@ fi
 echo "Select your pixel format"
 echo "Select one option using up/down keys and enter to confirm:"
 echo
-optionspixfmt=("yuv420p" "yuv444p" "yuv444p16le")
+optionspixfmt=("yuv420p" "yuv420p10le" "yuv444p" "yuv444p10le" "yuv444p16le")
 select_option "${optionspixfmt[@]}"
 choicepixfmt=$?
 clear
